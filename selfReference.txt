@@ -1,0 +1,35 @@
+[
+    [09 May 24, BRENNTAG @ 9 JALAN PESAWAT S619367, , EPF S30, , 20GP]
+    , 
+    [, OOTS, , 1 HEXENE, BLKU2516826, ISO], 
+    [, , , , BLKU2568305, ISO]
+    , 
+    [, , , , TBA, ISO]
+    , 
+    [, SI GROUP @ 18 BANYAN AVE S627720, 10:00hrs , 2,4 DI-TERT-BUTYLPHENOL, GESU8090134, ISO]
+    , 
+    [, , , 2,6-DI-TERT-BUTYLPHENOL, EOLU8262663, ISO]
+    , 
+    [, , 12:00hrs , 2,4 DI-TERT-BUTYLPHENOL, GESU8093112, ISO]
+    , 
+    [, , , 2,6-DI-TERT-BUTYLPHENOL, EOLU8239719, ISO]
+    , 
+    [, , 14:00hrs , 2,4 DI-TERT-BUTYLPHENOL, SEGU8014442, ISO]
+    , 
+    [, , , 2,6-DI-TERT-BUTYLPHENOL, GESU8106312, ISO], [, , 1600(P), 2,4 DI-TERT-BUTYLPHENOL, EOLU8242944, ISO], [, , , 2,6-DI-TERT-BUTYLPHENOL, EOLU8275207, ISO], [, STELLA, , 49% HF, , 40GP], [, VALSPAR, 09:00hrs , 4020W01D ECODEX WATERBASED INSIDE, , FLEXI], [, , 16:00hrs , 17Q01AA ECODEX (19%) WATERBASED SPR, , FLEXI]]
+
+
+    // // //For print of proper information
+        // if (newList == null) {
+        //     // If sheets is empty
+        //     System.out.println("No data found.");
+        // } 
+        // else {
+        //     System.out.printf("\n%-15s || %40s || %20s || %40s || %20s\n", "Date", "Loading Address", "Loading Time", "Product", "Container ISO");
+        //     System.out.println("");
+        // }
+
+        // for (List<Object> row : newList) {               
+            
+        //         System.out.printf("%-15s || %40s || %20s || %40s || %20s\n", row.get(0), row.get(1), row.get(2), row.get(3), row.get(4));   
+        // }

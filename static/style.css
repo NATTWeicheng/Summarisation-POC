@@ -1,0 +1,140 @@
+#dataTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+h4 {
+    border-bottom: 1px solid rgb(110, 110, 110);
+}
+
+.tableWrapper {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: top;
+    border: 1px rgb(110, 110, 110);
+    width: 25%;
+}
+
+td {
+    padding-left: 8px;
+}
+
+#submitDateBtn {
+    background-color: #0199C5;
+    font-family: "Poppins", Sans-serif;
+    padding: 20px 55px 20px 55px;
+    letter-spacing: 0.35px;
+    font-weight: bold;
+    border: none;
+    color: white;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+
+/* General styles */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Calendar container */
+#calendar {
+    width: 75%;
+    margin: auto;
+}
+
+/* Month header */
+.month {
+    padding: 20px 25px;
+    background: #1abc9c;
+    text-align: center;
+    color: white;
+}
+
+.month ul {
+    margin: 0;
+    padding: 0;
+}
+
+.month ul li {
+    display: inline-block;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Navigation buttons */
+.prev {
+    float: left;
+}
+
+.next {
+    float: right;
+    margin-right: 10px;
+}
+
+/* Weekdays */
+.weekdays {
+    background-color: #ddd;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 10px 0;
+}
+
+.weekdays li {
+    text-align: center;
+    color: #666;
+}
+
+/* Days */
+.days {
+    background: #eee;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding-top: 10px;
+}
+
+.days li {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #777;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Highlight the selected day */
+.days li.selected {
+    background: #1abc9c;
+    color: white !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .calendar {
+        width: 90%;
+    }
+
+    .month ul li {
+        font-size: 18px;
+    }
+
+    .weekdays li, .days li {
+        font-size: 13px;
+    }
+}
+
+.event {
+    width: 5px;
+    height: 5px;
+    background-color: rgb(235, 97, 120);
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 4px;
+}
