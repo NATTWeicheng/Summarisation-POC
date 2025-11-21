@@ -1,9 +1,18 @@
-from logic.GoogleAPI import getCredentials, getLOADINGCNTR
+from logic.GoogleAPI import getLOADINGCNTR
 from datetime import datetime
 
 # functions to write in csv(overload functions to write different items)
-def writeCSV():
-    return 0
+def writeCSV(date, newList):
+    try:
+        with open("summary.txt", "w", encoding="utf-8") as f:
+            f.write(date)
+
+            for row in newList:
+                f.write(str(row))
+
+            print("successfully wrote to file")
+    except Exception as e:
+        print("an error occured at writeCSV:", e)
 
 # function to print ALL values in the sheets
 def printValue():
