@@ -16,8 +16,13 @@ window.onload = function() {
     // get all dates when page on load
     getAvailDates()
     .then(data => {
-        // split by timings and remove "" + []
-        timings = data.slice(1, -1).split(',').map(item => item.replace(/^\"|\"$/g, ''));
+        // split by timings and remove "" + [] + newlines + spaces
+        timings = data.slice(1, -1).split(',').map(item => 
+            item.replace(/\n/g, '')            // Remove newlines
+                .trim()                        // Remove extra spaces
+                .replace(/^"|"$/g, '')         // Remove leading/trailing quotes
+        );
+        console.log("Cleaned timings:", timings); // Debug
         addEvents(timings);
     });
 }
@@ -202,6 +207,89 @@ checkDateButton.addEventListener("click", function () {
 
 })
 
+// checkDateButton.addEventListener("click", function () {
+//     console.log("Button clicked!"); // Check if button click is registered
+
+//     // hide calendar + check button 
+//     display.style.display = "block";
+//     display.style.opacity = '1';
+//     checkDateButton.style.display = 'none';
+//     bigCalendar.style.display = 'none';
+
+//     console.log("dayPassed:", dayPassed);
+//     console.log("monthPassed:", monthPassed);
+//     console.log("yearPassed:", yearPassed);
+
+//     // change format of day, month and year passed as startDateString
+//     // make day be 2 characters
+//     if (dayPassed < 10) {
+//         dayPassed = "0" + dayPassed;
+//     }
+//     startDateString = dayPassed + " " + (monthNames[monthPassed]).substring(0, 3) + " " + yearPassed.toString().slice(-2);
+    
+//     console.log("Formatted startDateString:", startDateString);
+//     console.log("Available timings:", timings);
+
+//     // check whether startDate is found in available dates
+//     var found = false;
+//     for (var i = 0; i < timings.length; i++) {
+//         if (startDateString === timings[i]) {
+//             found = true;
+//             break;
+//         }
+//     }
+    
+//     console.log("Date found in timings:", found);
+    
+//     // if startDateString is not found in list of timings, 
+//     if (!found) {
+//         console.log("Date not found - showing error");
+//         document.getElementById('dataTable').textContent = "Selected date \"" + startDateString + "\" does not have a schedule";
+//     } else {
+//         console.log("Date found - processing...");
+//         // compare and see which is the next date to be set as endDate
+//         // convert startDateString to a Date object
+//         const startDateObject = new Date(startDateString.replace(/(\d{2}) (\w{3}) (\d{2})/, "$1-$2-$20$3"));
+//         var endDate;
+        
+//         for (var i = 0; i < timings.length; i++) {
+//             // convert each date string to a date object
+//             const dateObject = new Date(timings[i].replace(/(\d{2}) (\w{3}) (\d{2})/, "$1-$2-$20$3"));
+//             if (dateObject > startDateObject) {
+//                 endDate = timings[i];
+//                 break;
+//             }
+//         }
+//         // if startDate was the last in the list
+//         if (endDate === undefined) {
+//             endDate = "TBA";
+//         }
+
+//         endDateString = endDate;
+
+//         console.log("startDateString", startDateString);
+//         console.log("endDateString", endDateString);
+        
+//         // set selected start date 
+//         selectedStartDate.textContent = "Start Date: " + startDateString;
+
+//         // pass start and end date into backend
+//         passDates(startDateString, endDateString)
+//         .then(data => {
+//             console.log("Received data from backend:", data);
+//             // create frontend for data
+//             var dataString = convertData(data).toString();
+//             var dataArray = dataString.split(/\],\s*\[/).map(item => item.replace(/^\[|\]$/g, ''));
+//             // console.log("dataArray", dataArray);
+
+//             createTables(dataArray);
+//         })
+//         .catch(error => {
+//             console.error("Error calling backend:", error);
+//         })
+//     }
+
+// })
 
 
 
@@ -334,7 +422,7 @@ function passDates(startDate, newEndDate) {
     return fetch('/start-end', {
         method: 'POST',
         headers: {
-            'Content-Type': 'text/plain' // send plain text
+            'Content-Type': 'application/json' // send plain text - update to application/json
         },
         body: JSON.stringify(requestData)
     })

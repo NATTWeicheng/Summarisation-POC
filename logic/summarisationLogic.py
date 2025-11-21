@@ -52,7 +52,7 @@ def printCollectionDate():
             ))
             print("")
             for rows in values:
-                if rows[7] is "27 Apr 24":
+                if rows[7] == "27 Apr 24":
                     print("\n{:<50} || {:>20} || {:>20} || {:>10} || {:>10} || {:>5}", rows[1],
                           rows[5], rows[6], rows[7], rows[8], rows[13])
     except Exception as e:
@@ -68,28 +68,28 @@ def createDeploymentSheet(startDate, endDate):
 
         for i, rows in enumerate(values):
             if len(rows) > 0:
-                if rows[0] == startDate:
+                cell = str(rows[0].strip())
+                if cell.startswith(startDate):
                     startIndex = i
-                if rows[0] == endDate:
+                if cell.startswith(endDate):
                     endIndex = i
                 
                 if startIndex is None or endIndex is None:
                     print("start or end date not found.")
                     return None
 
-                else:
-                    newList = values [startIndex:endIndex]
-                return newList
+        newList = values[startIndex:endIndex]
+        return newList
+        
     except Exception as e:
-        print("error")
-        return 0
+        print("error creating deployment sheet", e)
+        return None
 
 # Count howmany times the address appeared
 def groupAddress(startDate, endDate):
 
     # Retrieve the data
     valueList = createDeploymentSheet(startDate, endDate)
-
     if not valueList:
         return []
     
@@ -98,7 +98,7 @@ def groupAddress(startDate, endDate):
     countEmpty = 1
 
     for row in valueList:
-        localAddress = str(row[1]) if len(row) > 1 else "" 
+        localAddress = str(row[0]) if len(row) > 0 else "" 
         if localAddress != "":
             currentAddress = localAddress
             countEmpty = 1
@@ -113,17 +113,17 @@ def groupAddress(startDate, endDate):
 
     while currentRow < n:
         row = valueList[currentRow]
-        address = str(row[1]) if len(row) > 1 else ""
+        address = str(row[0]) if len(row) > 0 else ""
 
         if address != "":
             countRow = loadingAddTimes.get(address, 1)
             endRow = min(currentRow + countRow, n)
             specificAddTime = valueList[currentRow:endRow]
-            totalAddTime.append(specificAddTime)
+            totalAddTime.extend(specificAddTime)
             currentRow = endRow
         else:
             currentRow += 1
-
+    print(totalAddTime)
     return totalAddTime
 
 
@@ -132,17 +132,20 @@ def getAddTime(groupedAddress):
         return ""
 
     result = ""
-    presentDate = str(groupedAddress[0][0][0])  # Take first row, first column as the date
+    presentDate = ""
     presentLocation = ""
     deliveryTime = ""
 
     currentDayData = []
-    for group in groupedAddress:
-        for row in group:
-            currentDayData.append([str(cell) for cell in row])
+    for row in groupedAddress:
+        currentDayData.append([str(cell) for cell in row])
 
     for row in currentDayData:
-        row[0] = presentDate
+        # Carry forward the date from previous rows
+        if len(row) > 0 and row[0] != "":
+            presentDate = row[0]
+        else:
+            row[0] = presentDate
 
         if len(row) > 1:
             if row[1] == "":
@@ -159,9 +162,7 @@ def getAddTime(groupedAddress):
         for i, val in enumerate(row):
             result += f'{i+1}:"{val}"\n'
 
-    print(result)
     return result
-
 
 def printDeploymentSheet(startDate, endDate):
     return getAddTime(groupAddress(startDate, endDate))

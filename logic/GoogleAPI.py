@@ -21,8 +21,8 @@ def getCredentials():
     # Iniialize
     creds = None
     # Checks if token already exist
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', GOOGLE_SHEET_SCOPE)
+    if os.path.exists('tokens/token.json'):
+        creds = Credentials.from_authorized_user_file('tokens/token.json', GOOGLE_SHEET_SCOPE)
     # Checks if credential are valid
     if not creds or not creds.valid:
         # Check if credential is expired and if have refresh token
@@ -35,7 +35,7 @@ def getCredentials():
             creds = flow.run_local_server(port=8888)
         
         # Saves credentials to token.json
-        with open('token.json', 'w') as token:
+        with open('tokens/token.json', 'w') as token:
             token.write(creds.to_json())
     
     return creds
