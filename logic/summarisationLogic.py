@@ -71,12 +71,15 @@ def printCollectionDate():
 def createDeploymentSheet(startDate, endDate):
     newList = []
     try:
+        # Get google sheet values
         values = getLOADINGCNTR()
         startIndex = 0
         endIndex = 0
 
+
         for i, rows in enumerate(values):
             if len(rows) > 0:
+                # Change into string and remove spaces
                 cell = str(rows[0].strip())
                 if cell.startswith(startDate):
                     startIndex = i
@@ -87,6 +90,7 @@ def createDeploymentSheet(startDate, endDate):
                     print("start or end date not found.")
                     return None
 
+        # Find the values from start date(inclusive) to end date(exclusive)
         newList = values[startIndex:endIndex]
         return newList
         
@@ -107,13 +111,18 @@ def groupAddress(startDate, endDate):
     countEmpty = 1
 
     for row in valueList:
+        # check for address, row[0] is address
+        # checks if it is empty
         localAddress = str(row[0]) if len(row) > 0 else "" 
         if localAddress != "":
+            # not empty case
             currentAddress = localAddress
             countEmpty = 1
         else:
+            # if empty
             countEmpty += 1
 
+        # store the address data
         loadingAddTimes[currentAddress] = countEmpty
 
     totalAddTime = []
@@ -125,6 +134,7 @@ def groupAddress(startDate, endDate):
         address = str(row[0]) if len(row) > 0 else ""
 
         if address != "":
+            # get the address data we just created
             countRow = loadingAddTimes.get(address, 1)
             endRow = min(currentRow + countRow, n)
             specificAddTime = valueList[currentRow:endRow]
@@ -132,10 +142,9 @@ def groupAddress(startDate, endDate):
             currentRow = endRow
         else:
             currentRow += 1
-    print(totalAddTime)
     return totalAddTime
 
-
+# 
 def getAddTime(groupedAddress):
     if not groupedAddress:
         return ""
@@ -147,25 +156,33 @@ def getAddTime(groupedAddress):
 
     currentDayData = []
     for row in groupedAddress:
+        # convert everything into string
         currentDayData.append([str(cell) for cell in row])
 
     for row in currentDayData:
         # Carry forward the date from previous rows
+        # if not empty
         if len(row) > 0 and row[0] != "":
+            # set presentDate as data found
             presentDate = row[0]
         else:
+            # if empty, set it as the latest found
             row[0] = presentDate
 
         if len(row) > 1:
+            # if location is empty, set as latest found
             if row[1] == "":
                 row[1] = presentLocation
             else:
+                # if not empty, set as the current iteration's location
                 presentLocation = row[1]
 
         if len(row) > 2:
+            # if time is empty, set as the latest one found
             if row[2] == "":
                 row[2] = deliveryTime
             else:
+                # if not empty, set as the current iteration's delivery time
                 deliveryTime = row[2]
 
         for i, val in enumerate(row):

@@ -12,6 +12,7 @@ TOKEN_DIRECTORY_PATH = os.getenv('TOKEN_PATH')
 # Scopes and credentials
 GOOGLE_SHEET_SCOPE = [os.getenv('GOOGLE_SHEET_SCOPE')]
 CREDENTIALS_FILE_PATH = os.getenv('CREDENTIALS_FILE_PATH')
+SPREADSHEET_ID = os.getenv('GOOGLE_SPREADSHEET_ID')
 
 # Get credentials from google cloud console
 # Checks if user has a token already, if so proceed
@@ -48,7 +49,7 @@ def getLOADINGCNTR():
     service = build('sheets', 'v4', credentials=creds)
     
     # SGI Workorder sheet id
-    spreadsheet_id = '1un4plhTwC_uPaLb2JLt2HCY8ILU7xC1Xd_lNhTo0LL8'
+    spreadsheet_id = SPREADSHEET_ID
     # LOADINGCNTR is sheet name and column A to H - all rows
     range_name = 'LOADINGCNTR!A:H'
     # Returns a dict of data from GS

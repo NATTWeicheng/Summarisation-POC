@@ -22,7 +22,6 @@ window.onload = function() {
                 .trim()                        // Remove extra spaces
                 .replace(/^"|"$/g, '')         // Remove leading/trailing quotes
         );
-        console.log("Cleaned timings:", timings); // Debug
         addEvents(timings);
     });
 }
